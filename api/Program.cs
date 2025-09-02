@@ -16,8 +16,7 @@ public static class Program
 
     public static void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<MyDbContext>(options =>
-            options.UseNpgsql("Server=ep-muddy-pine-adt1rxmn-pooler.c-2.us-east-1.aws.neon.tech;DB=neondb;UID=neondb_owner;PWD=npg_7ZhobSkaOmY1;SslMode=require"));
+        services.AddDbContext<MyDbContext>(options => options.UseSqlite("Data Source=pets.db"));
 
         services.AddScoped<IPetService, PetService>();
 

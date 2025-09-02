@@ -7,9 +7,9 @@ namespace serversidevalidation;
 public interface IPetService
 {
     Task<Pet> CreatePet(CreatePetRequestDto pet);
-    Pet UpdatePet(UpdatePetRequestDto pet);
-    Pet DeletePet(string petId);
-    List<Pet> GetAllPets();
+    Task<Pet> UpdatePet(UpdatePetRequestDto pet);
+    Task<Pet> DeletePet(string petId);
+    Task<List<Pet>> GetAllPets();
 }
 
 public class PetService(MyDbContext _db) : IPetService
@@ -24,14 +24,13 @@ public class PetService(MyDbContext _db) : IPetService
             age: pet.Age,
             name: pet.Name, 
             createdAt: DateTime.UtcNow,
-            id: Guid.NewGuid().ToString(),
-            description: "hardcoded description"); 
+            id: Guid.NewGuid().ToString()); 
        await _db.Pets.AddAsync(petEntity);
        await _db.SaveChangesAsync();
       return petEntity;
     }
 
-    public Pet UpdatePet(UpdatePetRequestDto pet)
+    public async Task<Pet> UpdatePet(UpdatePetRequestDto pet)
     {
         Validator.ValidateObject(pet, 
             new ValidationContext(pet), 
@@ -39,19 +38,19 @@ public class PetService(MyDbContext _db) : IPetService
         var existingPet = _db.Pets.First(p => p.Id == pet.Id);
         existingPet.Age = pet.Age;
         existingPet.Name = pet.Name;
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
         return existingPet;
     }
 
-    public Pet DeletePet(string petId)
+    public async Task<Pet> DeletePet(string petId)
     {
         var existingPet = _db.Pets.First(p => p.Id == petId);
         _db.Pets.Remove(existingPet);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
         return existingPet;
     }
 
-    public List<Pet> GetAllPets()
+    public async Task<List<Pet>> GetAllPets()
     {
         return _db.Pets.ToList();
     }

@@ -5,13 +5,12 @@ namespace serversidevalidation.Entities;
 
 public partial class Pet
 {
-    public Pet(string id, string name, DateTime createdAt, int age, string description)
+    public Pet(string id, string name, DateTime createdAt, int age)
     {
         Id = id;
         Name = name;
         CreatedAt = createdAt;
         Age = age;
-        Description = description;
     }
 
     public string Id { get; set; } = null!;
@@ -22,5 +21,4 @@ public partial class Pet
 
     public int Age { get; set; }
 
-    public string Description { get; set; } = null!;
 }

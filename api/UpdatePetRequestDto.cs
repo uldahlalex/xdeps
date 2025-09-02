@@ -11,11 +11,10 @@ public record UpdatePetRequestDto
         Id = id;
     }
 
-    [MinLength(2)]
-    public string Name { get; set; }
-    [Range(0,15)]
-    public int Age { get; set; }
-    /// <summary>
+    [MinLength(3)][Required] 
+    public string Name { get; set; } = null!;
+    [Range(0,15)][Required]
+    public int Age { get; set; }  /// <summary>
     /// ID is used for retrieving existing pet, not for updating the ID value
     /// </summary>
     public string Id { get; set; }

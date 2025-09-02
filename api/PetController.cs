@@ -15,21 +15,21 @@ public class PetController(IPetService petService) : ControllerBase
     }
 
     [HttpPatch(nameof(UpdatePet))]
-    public Pet UpdatePet([FromBody]UpdatePetRequestDto p)
+    public async Task<Pet> UpdatePet([FromBody]UpdatePetRequestDto p)
     {
-        return petService.UpdatePet(p);
+        return await petService.UpdatePet(p);
     }
 
     [HttpDelete(nameof(DeletePet))]
-    public Pet DeletePet(string petId)
+    public async Task<Pet> DeletePet(string petId)
     {
-        return petService.DeletePet(petId);
+        return await petService.DeletePet(petId);
     }
 
     [HttpGet(nameof(GetAllPets))]
-    public List<Pet> GetAllPets()
+    public async Task<List<Pet>> GetAllPets()
     {
-        return petService.GetAllPets();
+        return await petService.GetAllPets();
     }
     
 }
