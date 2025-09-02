@@ -1,3 +1,4 @@
+using Infrastructure.Postgres.Scaffolding;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +13,6 @@ public class Startup
     {
         Program.ConfigureServices(services);
         services.RemoveAll(typeof(MyDbContext));
-        
-        // Register a scoped DbContext factory that creates a new database per test
         services.AddScoped<MyDbContext>(provider =>
         {
             var connection = new SqliteConnection("Data Source=:memory:");
@@ -26,8 +25,5 @@ public class Startup
             return context;
         });
         
-        // Remove scoped PetService registration and re-add as scoped for per-test isolation
-        services.RemoveAll(typeof(IPetService));
-        services.AddScoped<IPetService, PetService>();
     }
 }

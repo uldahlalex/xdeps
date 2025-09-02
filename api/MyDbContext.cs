@@ -1,11 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using serversidevalidation;
+using serversidevalidation.Entities;
 
-public class MyDbContext : DbContext
+namespace Infrastructure.Postgres.Scaffolding;
+
+public partial class MyDbContext : DbContext
 {
-    public DbSet<Pet> Pets { get; set; }
-
-    public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
+    public MyDbContext(DbContextOptions<MyDbContext> options)
+        : base(options)
     {
     }
+
+    public virtual DbSet<Pet> Pets { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

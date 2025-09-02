@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Infrastructure.Postgres.Scaffolding;
+using serversidevalidation.Entities;
 
 namespace serversidevalidation;
 
